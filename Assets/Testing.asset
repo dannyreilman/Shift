@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4880e6e3bceaf458c19590c327effc, type: 3}
+  m_Name: Testing
+  m_EditorClassIdentifier: 
+  bpm: 128
+  offset: 0
+  beatsPerMeasure: 4
+  song: {fileID: 8300000, guid: 7764ec29f8e11f646b95579fc2a47515, type: 3}
+  notes:
+  - timing:
+      bars: 1
+      beats: 0
+      subdivision: 0
+    type: 0
+    lane: 0
+  - timing:
+      bars: 2
+      beats: 0
+      subdivision: 0
+    type: 0
+    lane: 1
+  - timing:
+      bars: 3
+      beats: 0
+      subdivision: 0
+    type: 0
+    lane: 2
+  - timing:
+      bars: 4
+      beats: 0
+      subdivision: 0
+    type: 0
+    lane: 3
+  - timing:
+      bars: 5
+      beats: 0
+      subdivision: 0
+    type: 0
+    lane: 4
