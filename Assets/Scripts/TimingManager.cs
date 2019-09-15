@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TimingManager : MonoBehaviour, CursorUser
@@ -24,13 +25,11 @@ public class TimingManager : MonoBehaviour, CursorUser
 	//Timing to Note
 	private List<ClosebyNote> notesInWindow = new List<ClosebyNote>();
 
-	private AudioSource metronome;
-	
 	void Start()
 	{
 		KeybindManager.accept += AcceptInput;
-		metronome = GetComponent<AudioSource>();
 	}
+
 	public FlowManager.AcceptNote GetCursor()
 	{
 		return AcceptNote;
@@ -51,7 +50,58 @@ public class TimingManager : MonoBehaviour, CursorUser
 
 	public void AcceptInput(int row, NoteType nType)
 	{
-		Debug.Log("Input: " + nType);
+		ClosebyNote closestNote = null;
+		foreach(ClosebyNote note in notesInWindow)
+		{
+			if(note.note.lane == row && 
+			   note.note.type == nType &&
+			  (closestNote == null || Mathf.Abs(note.timing) < Mathf.Abs(closestNote.timing)))
+			{
+				closestNote = note;
+			}
+		}
+		if(closestNote == null)
+		{
+			HitsoundManager.instance.PlaySound(SoundType.Normal, false);
+			return;
+		}
+		ScoreManager.instance.totalAccuracy += closestNote.timing;
+		ScoreManager.instance.notesHit += 1;
+		Window last = timingWindows[0];
+		for(int i = 1; i < timingWindows.Count; ++i)
+		{
+			if(Mathf.Abs(closestNote.timing) > Mathf.Abs(timingWindows[i].msDelay))
+			{
+				TriggerWindow(last);
+				if(closestNote.note.rendered != null)
+					closestNote.note.rendered.HitNote();
+				HitsoundManager.instance.PlaySound(closestNote.note.soundType);
+				notesInWindow.Remove(closestNote);
+				return;
+
+			}
+			last = timingWindows[i];
+		}
+		TriggerWindow(last);
+		if(closestNote.note.rendered != null)
+			closestNote.note.rendered.HitNote();
+		HitsoundManager.instance.PlaySound(closestNote.note.soundType);
+		notesInWindow.Remove(closestNote);
+		return;
+	}
+	
+	private void TriggerWindow(Window w)
+	{
+		ScoreManager.instance.score += w.pointValue;
+		if(w.breaksCombo)
+		{
+			ScoreManager.instance.combo = 0;
+		}
+		else
+		{
+			ScoreManager.instance.combo++;
+		}
+
 	}
 
 	void Update()
@@ -61,8 +111,11 @@ public class TimingManager : MonoBehaviour, CursorUser
 			notesInWindow[i].timing += Time.deltaTime * 1000.0f;
 			if(notesInWindow[i].timing > timingWindows[0].msDelay)
 			{
+				if(notesInWindow[i].note.rendered != null)
+					notesInWindow[i].note.rendered.CleanupNote();
+				ScoreManager.instance.combo = 0;
 				notesInWindow.RemoveAt(i);
-				Debug.Log("Removing...");
+				//Debug.Log("Removing...");
 			}
 		}
 	}

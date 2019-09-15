@@ -49,6 +49,29 @@ public class Timestamp
 			this.subdivision = subdivision;
 		}
 	}
+
+	public Timestamp(float secondsPassed, int beatsPerMeasure, float beatsPerMinute)
+	{
+		subdivision = MAX_SUBDIVISION * secondsPassed * beatsPerMinute / 60.0f;
+		normalize(beatsPerMeasure);
+	}
+
+
+	private void normalize(int beatsPerMeasure)
+	{
+		while(subdivision >= MAX_SUBDIVISION)
+		{
+			subdivision -= MAX_SUBDIVISION;
+			beats += 1;
+		}
+
+		while(beats >= beatsPerMeasure)
+		{
+			beats -= beatsPerMeasure;
+			bars += 1;
+		}
+	}
+
 	public float getTicks(int beatsPerMeasure = MAX_BEAT_PER_MEASURE)
 	{	
 		if(beatsPerMeasure > MAX_BEAT_PER_MEASURE)
@@ -70,21 +93,22 @@ public class Timestamp
 		float subdivisionPassed = beatsPassed * MAX_SUBDIVISION;
 		
 		subdivision += subdivisionPassed;
-		while(subdivision >= MAX_SUBDIVISION)
-		{
-			subdivision -= MAX_SUBDIVISION;
-			beats += 1;
-		}
+		normalize(beatsPerMeasure);
+	}
 
-		while(beats >= beatsPerMeasure)
-		{
-			beats -= beatsPerMeasure;
-			bars += 1;
-		}
+	public void addTicks(int beatsPerMeasure, float toAdd)
+	{
+		subdivision += toAdd;
+		normalize(beatsPerMeasure);
 	}
 
 	public static bool operator==(Timestamp a, Timestamp b)
 	{
+		//If one is null and the other isn't
+		if(object.ReferenceEquals(b,null) != object.ReferenceEquals(a,null))
+			return false;
+		if(object.ReferenceEquals(a,null) && object.ReferenceEquals(b,null))
+			return true;
 		return a.bars == b.bars &&
 			   a.beats == b.beats &&
 			   a.subdivision == b.subdivision;

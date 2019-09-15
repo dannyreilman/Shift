@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoteMover : MonoBehaviour {
+public class NoteMover : MonoBehaviour
+{
+	[HideInInspector()]
+	public int lane;
+	float progress = 0.0f;
 
-	float speed;
-	public void SetSpeed(float speed)
-	{
-		this.speed = speed;
-	}
+	NoteLoader following;
 	
 	// Update is called once per frame
 	void Update () 
 	{
-		transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
+		progress += Time.deltaTime / NoteLoader.BASE_DELAY;
+
+		transform.position = new Vector3(LaneManager.instance.lanePositions[lane], LaneManager.instance.GetHeight(progress), 0);
 	}
 }

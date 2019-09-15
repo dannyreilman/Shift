@@ -4,7 +4,8 @@
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -12,37 +13,55 @@ MonoBehaviour:
   m_Name: Testing
   m_EditorClassIdentifier: 
   bpm: 128
-  offset: 0
+  offset: 260
   beatsPerMeasure: 4
   song: {fileID: 8300000, guid: 7764ec29f8e11f646b95579fc2a47515, type: 3}
   notes:
   - timing:
-      bars: 1
+      bars: 0
       beats: 0
       subdivision: 0
     type: 0
     lane: 0
+    soundType: 0
+    rendered: {fileID: 0}
   - timing:
-      bars: 2
+      bars: 0
       beats: 0
-      subdivision: 0
+      subdivision: 500
     type: 0
     lane: 1
+    soundType: 0
+    rendered: {fileID: 0}
   - timing:
-      bars: 3
-      beats: 0
+      bars: 0
+      beats: 1
       subdivision: 0
     type: 0
     lane: 2
+    soundType: 0
+    rendered: {fileID: 0}
   - timing:
-      bars: 4
-      beats: 0
+      bars: 0
+      beats: 1
+      subdivision: 500
+    type: 0
+    lane: 2
+    soundType: 0
+    rendered: {fileID: 0}
+  - timing:
+      bars: 0
+      beats: 2
       subdivision: 0
     type: 0
-    lane: 3
+    lane: 0
+    soundType: 0
+    rendered: {fileID: 0}
   - timing:
-      bars: 5
-      beats: 0
-      subdivision: 0
+      bars: 0
+      beats: 2
+      subdivision: 500
     type: 0
-    lane: 4
+    lane: 1
+    soundType: 0
+    rendered: {fileID: 0}

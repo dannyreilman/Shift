@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 
 //Handles all control flow and song cursors
@@ -17,16 +18,20 @@ public class FlowManager : MonoBehaviour {
 	private SongPlayer player;
 	private NoteLoader loader;
 	private TimingManager timing;
+	private TimeKeeper timekeeper;
+
 	public LoadedSong initSong;
 	private LoadedSong song;
 	private int songNoteIndex = 0;
 	
-	private Timestamp time = new Timestamp();
+	public Timestamp time = new Timestamp();
 	
 	public delegate void AcceptNote(Note n);
 	private Dictionary<float, AcceptNote> loadCursors = new Dictionary<float, AcceptNote>();
 	//Total offset to make negative cursors 0
-	private float totalOffset = 0;
+	public float totalOffset = 0;
+	//The perceived offset in the music
+	public float actualOffset;
 	private bool waiting = true;
 	void Awake()
 	{
@@ -36,6 +41,7 @@ public class FlowManager : MonoBehaviour {
 			player = GetComponentInChildren<SongPlayer>();
 			loader = GetComponentInChildren<NoteLoader>();
 			timing = GetComponentInChildren<TimingManager>();
+			timekeeper = GetComponentInChildren<TimeKeeper>();
 		}
 		else
 		{
@@ -46,6 +52,12 @@ public class FlowManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		LoadSongFromFile songLoader = GetComponent<LoadSongFromFile>();
+		if(songLoader != null)
+		{
+			initSong = LoadSongFromFile.LoadSong(songLoader.file, songLoader.audio);
+		}
+		timekeeper.SetBPM(initSong.bpm);
 		PlaySong(initSong);
 	}
 
@@ -64,23 +76,24 @@ public class FlowManager : MonoBehaviour {
 		yield return new WaitForSeconds(delay);
 		waiting = false;
 	}
+
 	void PlaySong(LoadedSong song)
 	{
+		song.PrepForPlaying();
 		this.song = song;
 		AddCursor(loader);
 		AddCursor(timing);
-		float adjustedOffset = -1 * (totalOffset + song.offset);
-		if(adjustedOffset > 0)
+		actualOffset = -1 * (totalOffset + song.offset);
+		if(actualOffset > 0)
 		{
 			player.Play(song, 0);
-			StartCoroutine(StartAfterDelay(adjustedOffset / 1000.0f));
+			StartCoroutine(StartAfterDelay(actualOffset / 1000.0f));
 		}
 		else
 		{
-			player.Play(song, (-1 * adjustedOffset)/1000.0f);
+			player.Play(song, (-1 * actualOffset)/1000.0f);
 			StartCoroutine(StartAfterDelay(0));
 		}
-
 	}
 
 	IEnumerator TriggerAfterDelay(float delay, AcceptNote toTrigger, Note n)
