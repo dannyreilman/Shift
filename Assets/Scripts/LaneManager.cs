@@ -10,13 +10,19 @@ public class LaneManager : MonoBehaviour
 		if(instance == null || instance.Equals(null))
 		{
 			instance = this;
+            lanePositions = new float[transform.childCount];
+            for(int i = 0; i < transform.childCount; ++i)
+            {
+                lanePositions[i] = transform.GetChild(i).GetComponent<RectTransform>().position.x;
+                Debug.Log(i);
+                Debug.Log(transform.GetChild(i));
+            }
 		}
 		else
 		{
 			Destroy(this);
 		}
 	}
-
     public float[] lanePositions;
 
     public RectTransform timingLine;

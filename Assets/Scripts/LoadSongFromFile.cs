@@ -76,7 +76,6 @@ public class LoadSongFromFile : MonoBehaviour
                 }
             }
         }
-        Debug.Log(toAdd.type);
         return toAdd;
     }
 

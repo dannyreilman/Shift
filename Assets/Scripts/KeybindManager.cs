@@ -6,7 +6,7 @@ public class KeybindManager : MonoBehaviour {
 	public delegate void AcceptHit(int row, NoteType type);
 	public static AcceptHit accept;
 
-	static KeybindManager instance = null;
+	public static KeybindManager instance = null;
 
 	[System.Serializable]
 	public struct Binding
@@ -16,6 +16,21 @@ public class KeybindManager : MonoBehaviour {
 		public KeyCode down;
 	}
 	public List<Binding> bindings;
+
+	public static bool GetDown(int row, NoteType type)
+	{
+		switch(type)
+		{
+			case NoteType.DownHit:
+				return Input.GetKey(instance.bindings[row].down);
+			case NoteType.Hit:
+				return Input.GetKey(instance.bindings[row].mid);
+			case NoteType.UpHit:
+				return Input.GetKey(instance.bindings[row].up);
+			default:
+				return false;
+		}
+	}
 
 	// Use this for initialization
 	void Awake ()

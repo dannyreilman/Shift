@@ -15,6 +15,7 @@ public class NoteMover : MonoBehaviour
 	{
 		progress += Time.deltaTime / NoteLoader.BASE_DELAY;
 
-		transform.position = new Vector3(LaneManager.instance.lanePositions[lane], LaneManager.instance.GetHeight(progress), 0);
+		transform.position = new Vector3(0, LaneManager.instance.GetHeight(progress), 0);
+		transform.localPosition = new Vector2(0, transform.localPosition.y);
 	}
 }

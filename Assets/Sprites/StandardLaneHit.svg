@@ -12,13 +12,13 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="75mm"
-   height="75mm"
-   viewBox="0 0 75 75.000001"
+   height="500mm"
+   viewBox="0 0 75 500"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="StandardHit.svg"
-   inkscape:export-filename="C:\Users\Danny\Shift\Assets\Sprites\StandardHit.png"
+   sodipodi:docname="StandardLaneHit.svg"
+   inkscape:export-filename="C:\Users\Danny\Shift\Assets\Sprites\StandardLaneHit.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <defs
@@ -27,24 +27,24 @@
        id="linearGradient4551"
        osb:paint="gradient">
       <stop
-         style="stop-color:#00cb21;stop-opacity:1"
+         style="stop-color:#84da9a;stop-opacity:1"
          offset="0"
          id="stop4547" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:1"
+         style="stop-color:#ffffff;stop-opacity:0.26"
          offset="1"
          id="stop4549" />
     </linearGradient>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient4551"
-       id="linearGradient4563"
-       x1="49.172852"
-       y1="262.91998"
-       x2="49.172852"
-       y2="234.77675"
+       id="linearGradient825"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0113198,0,0,1.0102787,-0.2034834,-17.008355)" />
+       gradientTransform="matrix(1.0113198,0,0,1.0102787,-0.2034834,-17.008355)"
+       x1="49.172852"
+       y1="290.23151"
+       x2="49.172852"
+       y2="-202.16666" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -54,8 +54,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-177.81622"
-     inkscape:cy="0.82177782"
+     inkscape:cx="286.39644"
+     inkscape:cy="1140.7413"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -77,7 +77,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -85,10 +85,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-12.558064,-202.60091)">
+     transform="translate(-12.558064,222.39909)">
     <path
-       style="fill:url(#linearGradient4563);fill-opacity:1;stroke:#000000;stroke-width:1.00558126;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 13.000401,217.25351 74.114899,-0.003 -0.03996,45.70073 -74.073845,-0.0131 z"
+       style="fill:url(#linearGradient825);fill-opacity:1;stroke:none;stroke-width:1.00558126;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 12.813931,-222.39824 74.994875,-0.009 -0.246952,500.0081 -74.748283,-0.0131 z"
        id="path4522-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
