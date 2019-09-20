@@ -9,9 +9,19 @@ public class NoteMover : MonoBehaviour
 	float progress = 0.0f;
 
 	NoteLoader following;
+
+	void Start()
+	{
+		PauseManager.PausableUpdate += PausableUpdate;
+	}
+
+	void OnDestroy()
+	{
+		PauseManager.PausableUpdate -= PausableUpdate;
+	}
 	
 	// Update is called once per frame
-	void Update () 
+	void PausableUpdate () 
 	{
 		progress += Time.deltaTime / NoteLoader.BASE_DELAY;
 

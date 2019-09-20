@@ -130,7 +130,6 @@ public class LoadSongFromFile : MonoBehaviour
                 else if(parts[0].ToLower().Trim().Equals("songfile"))
                 {
                     song.song = Resources.Load<AudioClip>("SongFiles/"+parts[1]);
-                    Debug.Log(parts[1]);
                 }
             }
         }

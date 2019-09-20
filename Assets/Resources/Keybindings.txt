@@ -12,3 +12,4 @@ midHit3:k
 downHit3:comma
 increaseSpeed:F4
 decreaseSpeed:F3
+pause:escape

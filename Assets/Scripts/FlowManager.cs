@@ -20,7 +20,6 @@ public class FlowManager : MonoBehaviour {
 	private TimingManager timing;
 	private TimeKeeper timekeeper;
 
-	public LoadedSong initSong;
 	private LoadedSong song;
 	private int songNoteIndex = 0;
 	
@@ -33,6 +32,7 @@ public class FlowManager : MonoBehaviour {
 	//The perceived offset in the music
 	public float actualOffset;
 	private bool waiting = true;
+
 	void Awake()
 	{
 		if(instance == null || instance.Equals(null))
@@ -52,6 +52,7 @@ public class FlowManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
+		LoadedSong initSong = null;
 		if(MapLoader.instance.loaded != null)
 		{
 			initSong = MapLoader.instance.loaded;
@@ -64,8 +65,17 @@ public class FlowManager : MonoBehaviour {
 				initSong = LoadSongFromFile.LoadSong(songLoader.file);
 			}		
 		}
-		timekeeper.SetBPM(initSong.bpm);
-		PlaySong(initSong);
+		if(initSong != null)
+		{
+			timekeeper.SetBPM(initSong.bpm);
+			PlaySong(initSong);
+		}
+		PauseManager.PausableUpdate += PausableUpdate;
+	}
+
+	void OnDestroy()
+	{
+		PauseManager.PausableUpdate -= PausableUpdate;
 	}
 
 	void AddCursor(CursorUser user)
@@ -109,7 +119,7 @@ public class FlowManager : MonoBehaviour {
 		toTrigger(n);
 	}
 
-	void Update()
+	void PausableUpdate()
 	{
 		if(!waiting)
 		{

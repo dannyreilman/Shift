@@ -18,9 +18,16 @@ public class HitLight : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        KeybindManager.accept[KeybindManager.GetRowHit(lane, NoteType.DownHit)] += TriggerDown;
-        KeybindManager.accept[KeybindManager.GetRowHit(lane, NoteType.Hit)] += TriggerMid;
-        KeybindManager.accept[KeybindManager.GetRowHit(lane, NoteType.UpHit)] += TriggerUp;
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.DownHit)] += TriggerDown;
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.Hit)] += TriggerMid;
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.UpHit)] += TriggerUp;
+    }
+
+    void OnDestroy()
+    {
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.DownHit)] -= TriggerDown;
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.Hit)] -= TriggerMid;
+        KeybindManager.acceptUnpaused[KeybindManager.GetRowHitAction(lane, NoteType.UpHit)] -= TriggerUp;
     }
 
     // Update is called once per frame

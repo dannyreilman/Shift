@@ -36,8 +36,14 @@ public class LaneManager : MonoBehaviour
     {
         timingHeight = timingLine.position.y;
         spawnHeight = spawnLine.position.y;
-        KeybindManager.accept[KeybindManager.InputAction.decreaseSpeed] += DecreaseSpeed;
-        KeybindManager.accept[KeybindManager.InputAction.increaseSpeed] += IncreaseSpeed;
+        KeybindManager.acceptAlways[KeybindManager.InputAction.decreaseSpeed] += DecreaseSpeed;
+        KeybindManager.acceptAlways[KeybindManager.InputAction.increaseSpeed] += IncreaseSpeed;
+    }
+
+    void OnDestroy()
+    {
+        KeybindManager.acceptAlways[KeybindManager.InputAction.decreaseSpeed] -= DecreaseSpeed;
+        KeybindManager.acceptAlways[KeybindManager.InputAction.increaseSpeed] -= IncreaseSpeed;
     }
 
     public float GetHeight(float progress)

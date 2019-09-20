@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class KeybindManager : MonoBehaviour {
 	public delegate void AcceptInput();
-	public static Dictionary<InputAction, AcceptInput> accept;
+	public delegate void AcceptRawInput(InputAction toAccept);
+	//Only accepts when unpaused
+	public static Dictionary<InputAction, AcceptInput> acceptUnpaused;
+	//Stronger than acceptUnpaused, also accepts during a pause (also accepts when unpaused)
+	public static Dictionary<InputAction, AcceptInput> acceptAlways;
+	public static AcceptRawInput acceptAnything;
 
 	public static KeybindManager instance = null;
 
@@ -24,12 +29,18 @@ public class KeybindManager : MonoBehaviour {
 		midHit3,
 		downHit3,
 		increaseSpeed,
-		decreaseSpeed	
+		decreaseSpeed,
+		pause	
 	}
 
 	public static char BINDING_DELIM = ':';
 
-	public static InputAction GetRowHit(int row, NoteType type)
+	public static bool IsRowHit(InputAction action)
+	{
+		return action <= InputAction.downHit3;
+	}
+
+	public static InputAction GetRowHitAction(int row, NoteType type)
 	{
 		switch(type)
 		{
@@ -74,6 +85,37 @@ public class KeybindManager : MonoBehaviour {
 				break;
 		}
 		return InputAction.downHit0;
+	}
+
+	//Should only be called for RowHit inputActions
+	public static int GetRow(InputAction action)
+	{
+		return ((int)action) / 10;
+	}
+
+	//Should only be called for RowHit inputActions
+	public static NoteType GetType(InputAction action)
+	{
+		switch(action)
+		{
+			case InputAction.downHit0:
+			case InputAction.downHit1:
+			case InputAction.downHit2:
+			case InputAction.downHit3:
+				return NoteType.DownHit;
+			case InputAction.upHit0:
+			case InputAction.upHit1:
+			case InputAction.upHit2:
+			case InputAction.upHit3:
+				return NoteType.UpHit;
+			case InputAction.midHit0:
+			case InputAction.midHit1:
+			case InputAction.midHit2:
+			case InputAction.midHit3:
+				return NoteType.Hit;
+			default:
+				throw new System.ArgumentException("GetType called on something that isn't a RowHit");
+		}
 	}
 
 	[System.Serializable]
@@ -126,10 +168,12 @@ public class KeybindManager : MonoBehaviour {
 		if(instance == null || instance.Equals(null))
 		{
 			instance = this;
-			accept = new Dictionary<InputAction, AcceptInput>();
+			acceptUnpaused = new Dictionary<InputAction, AcceptInput>();
+			acceptAlways = new Dictionary<InputAction, AcceptInput>();
 			foreach(InputAction action in System.Enum.GetValues(typeof(InputAction)))
 			{
-				accept.Add(action, null);
+				acceptUnpaused.Add(action, null);
+				acceptAlways.Add(action, null);
 			}
 			LoadBindingsFromFile(bindingsFile);
 		}
@@ -139,14 +183,24 @@ public class KeybindManager : MonoBehaviour {
 		}
 	}
 
+
 	void Update()
 	{
 		for(int i = 0; i < bindings.Count; ++i)
 		{
 			if(Input.GetKeyDown(bindings[i].key))
 			{
-				if(accept[bindings[i].action] != null)
-					accept[bindings[i].action]();
+				if(!PauseManager.paused)
+				{
+					if(acceptUnpaused[bindings[i].action] != null)
+						acceptUnpaused[bindings[i].action]();
+				}
+					
+				if(acceptAlways[bindings[i].action] != null)
+					acceptAlways[bindings[i].action]();
+
+				if(acceptAnything != null)
+					acceptAnything(bindings[i].action);
 			}
 		}
 	}

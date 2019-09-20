@@ -25,17 +25,19 @@ public class TimingManager : MonoBehaviour, CursorUser
 	//Timing to Note
 	private List<ClosebyNote> notesInWindow = new List<ClosebyNote>();
 
+
+
+
 	void Start()
 	{
-		for(int i = 0; i < 4; ++i)
-		{
-			foreach(NoteType nt in System.Enum.GetValues(typeof(NoteType)))
-			{
-				NoteType nt_copy = nt;
-				int i_copy = i;
-				KeybindManager.accept[KeybindManager.GetRowHit(i, nt)] += delegate{AcceptInput(i_copy, nt_copy);};
-			}
-		}
+		KeybindManager.acceptAnything += AcceptInput;
+		PauseManager.PausableUpdate += PausableUpdate;
+	}
+
+	void OnDestroy()
+	{
+		PauseManager.PausableUpdate -= PausableUpdate;
+		KeybindManager.acceptAnything -= AcceptInput;
 	}
 
 	public FlowManager.AcceptNote GetCursor()
@@ -56,9 +58,13 @@ public class TimingManager : MonoBehaviour, CursorUser
 		notesInWindow.Add(toAdd);
 	}
 
-	public void AcceptInput(int row, NoteType nType)
+	public void AcceptInput(KeybindManager.InputAction action)
 	{
-		Debug.Log("Hit");
+		if(!KeybindManager.IsRowHit(action) || PauseManager.paused)
+			return;
+
+		int row = KeybindManager.GetRow(action);
+		NoteType nType = KeybindManager.GetType(action);
 		ClosebyNote closestNote = null;
 		foreach(ClosebyNote note in notesInWindow)
 		{
@@ -113,7 +119,7 @@ public class TimingManager : MonoBehaviour, CursorUser
 
 	}
 
-	void Update()
+	void PausableUpdate()
 	{
 		for(int i = notesInWindow.Count - 1; i >= 0; --i)
 		{
