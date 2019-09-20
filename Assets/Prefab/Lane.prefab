@@ -500,9 +500,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lane: 0
-  upLaneImage: {fileID: 8300580177913437688}
-  normalLaneImage: {fileID: 8300580178668603242}
-  downLaneImage: {fileID: 8300580177822157067}
+  upImage: {fileID: 8300580177913437688}
+  midImage: {fileID: 8300580178668603242}
+  downImage: {fileID: 8300580177822157067}
   fadeSpeed: 4
 --- !u!114 &307672504908557373
 MonoBehaviour:

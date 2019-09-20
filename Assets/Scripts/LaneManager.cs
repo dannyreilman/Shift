@@ -14,8 +14,6 @@ public class LaneManager : MonoBehaviour
             for(int i = 0; i < transform.childCount; ++i)
             {
                 lanePositions[i] = transform.GetChild(i).GetComponent<RectTransform>().position.x;
-                Debug.Log(i);
-                Debug.Log(transform.GetChild(i));
             }
 		}
 		else
@@ -23,6 +21,7 @@ public class LaneManager : MonoBehaviour
 			Destroy(this);
 		}
 	}
+
     public float[] lanePositions;
 
     public RectTransform timingLine;
@@ -37,10 +36,24 @@ public class LaneManager : MonoBehaviour
     {
         timingHeight = timingLine.position.y;
         spawnHeight = spawnLine.position.y;
+        KeybindManager.accept[KeybindManager.InputAction.decreaseSpeed] += DecreaseSpeed;
+        KeybindManager.accept[KeybindManager.InputAction.increaseSpeed] += IncreaseSpeed;
     }
 
     public float GetHeight(float progress)
     {
         return (scrollFactor * spawnHeight) + progress * (timingHeight - (scrollFactor * spawnHeight));    
+    }
+
+    public void IncreaseSpeed()
+    {
+        scrollFactor += 1;
+    }
+
+    public void DecreaseSpeed()
+    {
+        scrollFactor -= 1;
+        if(scrollFactor < 1)
+            scrollFactor = 1;
     }
 }

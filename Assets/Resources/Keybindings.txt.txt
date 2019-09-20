@@ -1,0 +1,14 @@
+upHit0:e
+midHit0:d
+downHit0:c
+upHit1:r
+midHit1:f
+downHit1:v
+upHit2:u
+midHit2:j
+downHit2:m
+upHit3:i
+midHit3:k
+downHit3:comma
+increaseSpeed:F4
+decreaseSpeed:F3

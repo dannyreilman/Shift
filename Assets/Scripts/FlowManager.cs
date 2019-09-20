@@ -52,10 +52,17 @@ public class FlowManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		LoadSongFromFile songLoader = GetComponent<LoadSongFromFile>();
-		if(songLoader != null)
+		if(MapLoader.instance.loaded != null)
 		{
-			initSong = LoadSongFromFile.LoadSong(songLoader.file, songLoader.audio);
+			initSong = MapLoader.instance.loaded;
+		}
+		else
+		{
+			LoadSongFromFile songLoader = GetComponent<LoadSongFromFile>();
+			if(songLoader != null && (song == null || song.Equals(null)))
+			{
+				initSong = LoadSongFromFile.LoadSong(songLoader.file);
+			}		
 		}
 		timekeeper.SetBPM(initSong.bpm);
 		PlaySong(initSong);

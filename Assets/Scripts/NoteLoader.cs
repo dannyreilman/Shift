@@ -20,7 +20,7 @@ public class NoteLoader : MonoBehaviour, CursorUser
     void SpawnNote(Note n)
 	{
 		//Debug.Log("Spawning: " + n.lane);
-		GameObject spawned = GameObject.Instantiate(notePrefab, Vector3.zero, Quaternion.identity, transform.GetChild(n.lane));
+		GameObject spawned = GameObject.Instantiate(notePrefab, new Vector2(0,10000), Quaternion.identity, transform.GetChild(n.lane));
 		spawned.GetComponent<NoteMover>().lane = n.lane;
 		n.rendered = spawned.GetComponent<RenderedNote>();
 		n.rendered.InitializeNote(n);

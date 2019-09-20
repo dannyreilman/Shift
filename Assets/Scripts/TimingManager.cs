@@ -27,7 +27,15 @@ public class TimingManager : MonoBehaviour, CursorUser
 
 	void Start()
 	{
-		KeybindManager.accept += AcceptInput;
+		for(int i = 0; i < 4; ++i)
+		{
+			foreach(NoteType nt in System.Enum.GetValues(typeof(NoteType)))
+			{
+				NoteType nt_copy = nt;
+				int i_copy = i;
+				KeybindManager.accept[KeybindManager.GetRowHit(i, nt)] += delegate{AcceptInput(i_copy, nt_copy);};
+			}
+		}
 	}
 
 	public FlowManager.AcceptNote GetCursor()
@@ -50,6 +58,7 @@ public class TimingManager : MonoBehaviour, CursorUser
 
 	public void AcceptInput(int row, NoteType nType)
 	{
+		Debug.Log("Hit");
 		ClosebyNote closestNote = null;
 		foreach(ClosebyNote note in notesInWindow)
 		{

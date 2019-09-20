@@ -6,6 +6,7 @@ using UnityEngine.Assertions;
 
 public class LoadSongFromFile : MonoBehaviour
 {
+
     static char COMMENT = '#';
     static char NOTE = '-';
     static char NOTE_RELATIVE = '+';
@@ -79,11 +80,10 @@ public class LoadSongFromFile : MonoBehaviour
         return toAdd;
     }
 
-    public static LoadedSong LoadSong(TextAsset file, AudioClip audio)
+    public static LoadedSong LoadSong(TextAsset file)
     {
         LoadedSong song = (LoadedSong)ScriptableObject.CreateInstance("LoadedSong");
         song.notes = new List<Note>();
-        song.song = audio;
         StringReader reader = new StringReader(file.text);
         Timestamp lastTime = new Timestamp(0,0,0);
         while(reader.Peek() > -1)
@@ -127,12 +127,15 @@ public class LoadSongFromFile : MonoBehaviour
                 {
                     song.name = parts[1];
                 }
+                else if(parts[0].ToLower().Trim().Equals("songfile"))
+                {
+                    song.song = Resources.Load<AudioClip>("SongFiles/"+parts[1]);
+                    Debug.Log(parts[1]);
+                }
             }
         }
         return song;
     }
 
     public TextAsset file;
-
-    new public AudioClip audio;
 }

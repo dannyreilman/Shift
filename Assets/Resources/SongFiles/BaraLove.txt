@@ -1,5 +1,6 @@
 # This is a test of the comment feature
 name=BARA LOVE BLAST DOGGIES
+songfile=Renard - ROBOT BRAINSTRONAUT BLASTOFF!!! - 13 BARA LOVE BLAST DOGGES
 bpm=128
 offset=0
 beatsPerMeasure=4
@@ -142,4 +143,63 @@ beatsPerMeasure=4
 +0, 0, 500, 3, type=down
 +0, 0, 500, 0, type=down
 +0, 0, 500, 3, type=up
++0, 0, 500, 0, type=down
++0, 0, 500, 1
++0, 0, 500, 2
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=up
++0, 0, 500, 3, type=down
++0, 0, 500, 0, type=down
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=down
++0, 0, 500, 1
++0, 0, 500, 2
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=up
++0, 0, 500, 3, type=down
++0, 0, 500, 0, type=down
++0, 0, 500, 3, type=up
+# C'
++0, 0, 500, 0, type=down
++0, 0, 500, 0
++0, 0, 500, 0, type=up
++0, 0, 500, 1
++0, 0, 500, 3, type=down
++0, 0, 500, 3
++0, 0, 500, 3, type=up
++0, 0, 500, 2
+# C
++0, 0, 500, 0, type=down
++0, 0, 500, 1
++0, 0, 500, 2
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=up
++0, 0, 500, 3, type=down
++0, 0, 500, 0, type=down
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=down
++0, 0, 500, 1
++0, 0, 500, 2
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=up
++0, 0, 500, 3, type=down
++0, 0, 500, 0, type=down
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=down
++0, 0, 500, 1
++0, 0, 500, 2
++0, 0, 500, 3, type=up
++0, 0, 500, 0, type=up
++0, 0, 500, 3, type=down
++0, 0, 500, 0, type=down
++0, 0, 500, 3, type=up
+# C'
++0, 0, 500, 0, type=down
++0, 0, 500, 0
++0, 0, 500, 0, type=up
++0, 0, 500, 1
++0, 0, 500, 3, type=down
++0, 0, 500, 3
++0, 0, 500, 3, type=up
++0, 0, 500, 2
 

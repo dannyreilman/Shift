@@ -13,8 +13,8 @@ public class HoldButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        upImage.enabled = KeybindManager.GetDown(lane, NoteType.UpHit);
-        normalImage.enabled = KeybindManager.GetDown(lane, NoteType.Hit);
-        downImage.enabled = KeybindManager.GetDown(lane, NoteType.DownHit);
+        upImage.enabled = KeybindManager.GetDown(KeybindManager.GetRowHit(lane, NoteType.UpHit));
+        normalImage.enabled = KeybindManager.GetDown(KeybindManager.GetRowHit(lane, NoteType.Hit));
+        downImage.enabled = KeybindManager.GetDown(KeybindManager.GetRowHit(lane, NoteType.DownHit));
     }
 }
