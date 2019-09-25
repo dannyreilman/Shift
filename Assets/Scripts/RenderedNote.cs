@@ -17,6 +17,28 @@ public class RenderedNote : MonoBehaviour
 		attachedImage = GetComponent<Image>();
 	}
 
+	void Start()
+	{
+		PauseManager.OnPause += HideNote;
+		PauseManager.OnUnpause += ShowNote;
+	}
+
+	void OnDestroy()
+	{
+		PauseManager.OnPause -= HideNote;
+		PauseManager.OnUnpause -= ShowNote;
+	}
+
+	public void HideNote()
+	{
+		attachedImage.enabled = false;
+	}
+
+	public void ShowNote()
+	{
+		attachedImage.enabled = true;
+	}
+
 	public void CleanupNote()
 	{
 		Destroy(gameObject);

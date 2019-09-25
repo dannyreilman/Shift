@@ -45,8 +45,6 @@ public class PauseManager : MonoBehaviour
         if(instance == null || instance.Equals(null))
         {
             instance = this;
-            OnPause += StopTime;
-            OnUnpause += StartTime;
         }
         else
         {
@@ -56,7 +54,18 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
+        OnPause += StopTime;
+        OnUnpause += StartTime;
         KeybindManager.acceptAlways[KeybindManager.InputAction.pause] += Pause;
+    }
+
+    void OnDestroy()
+    {
+        //Auto unpause when leaving scene with a pause screen
+        paused = false;
+        OnPause -= StopTime;
+        OnUnpause -= StartTime;
+        KeybindManager.acceptAlways[KeybindManager.InputAction.pause] -= Pause;
     }
 
     public void Pause()
