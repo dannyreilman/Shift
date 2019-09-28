@@ -1,16 +1,14 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class KeybindManager : MonoBehaviour {
-	public delegate void AcceptInput();
-	public delegate void AcceptRawInput(InputAction toAccept);
 	//Only accepts when unpaused
-	public static Dictionary<InputAction, AcceptInput> acceptUnpaused;
+	public static Dictionary<InputAction, System.Action> acceptUnpaused;
 	//Stronger than acceptUnpaused, also accepts during a pause (also accepts when unpaused)
-	public static Dictionary<InputAction, AcceptInput> acceptAlways;
-	public static AcceptRawInput acceptAnything;
+	public static Dictionary<InputAction, System.Action> acceptAlways;
+	public static System.Action<InputAction> acceptAnything;
 
 	public static KeybindManager instance = null;
 
@@ -168,8 +166,8 @@ public class KeybindManager : MonoBehaviour {
 		if(instance == null || instance.Equals(null))
 		{
 			instance = this;
-			acceptUnpaused = new Dictionary<InputAction, AcceptInput>();
-			acceptAlways = new Dictionary<InputAction, AcceptInput>();
+			acceptUnpaused = new Dictionary<InputAction, System.Action>();
+			acceptAlways = new Dictionary<InputAction, System.Action>();
 			foreach(InputAction action in System.Enum.GetValues(typeof(InputAction)))
 			{
 				acceptUnpaused.Add(action, null);

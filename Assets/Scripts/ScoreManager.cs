@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +7,8 @@ public class ScoreManager : MonoBehaviour
 	public static ScoreManager instance = null;
 
 
-	public delegate void OnValueChange();
 
-	public OnValueChange OnScoreChange;
+	public System.Action OnScoreChange;
 	private int score_internal = 0;
 	public int score
 	{
@@ -27,7 +26,7 @@ public class ScoreManager : MonoBehaviour
 			}
 		}
 	}
-	public OnValueChange OnComboChange;
+	public System.Action OnComboChange;
 	private int combo_internal = 0;
 	public int combo
 	{

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -24,9 +24,7 @@ public class FlowManager : MonoBehaviour {
 	private int songNoteIndex = 0;
 	
 	public Timestamp time = new Timestamp();
-	
-	public delegate void AcceptNote(Note n);
-	private Dictionary<float, AcceptNote> loadCursors = new Dictionary<float, AcceptNote>();
+	private Dictionary<float, System.Action<Note>> loadCursors = new Dictionary<float, System.Action<Note>>();
 	//Total offset to make negative cursors 0
 	public float totalOffset = 0;
 	//The perceived offset in the music
@@ -113,7 +111,7 @@ public class FlowManager : MonoBehaviour {
 		}
 	}
 
-	IEnumerator TriggerAfterDelay(float delay, AcceptNote toTrigger, Note n)
+	IEnumerator TriggerAfterDelay(float delay, System.Action<Note> toTrigger, Note n)
 	{
 		yield return new WaitForSeconds(delay);
 		toTrigger(n);
@@ -127,7 +125,7 @@ public class FlowManager : MonoBehaviour {
 			while(songNoteIndex < song.notes.Count &&
 				time > song.notes[songNoteIndex].timing)
 			{
-				foreach(KeyValuePair<float, AcceptNote> entry in loadCursors)
+				foreach(KeyValuePair<float, System.Action<Note>> entry in loadCursors)
 				{
 					StartCoroutine(TriggerAfterDelay((totalOffset + entry.Key) / 1000.0f, 
 													entry.Value, 

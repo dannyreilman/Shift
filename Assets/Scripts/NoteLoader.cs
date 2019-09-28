@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public class NoteLoader : MonoBehaviour, CursorUser
 	public GameObject notePrefab;
 	public static float BASE_DELAY = 3.0f;
 
-	public FlowManager.AcceptNote GetCursor()
+	public System.Action<Note> GetCursor()
 	{
 		return SpawnNote;
 	}

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,10 +6,9 @@ using UnityEngine.SceneManagement;
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager instance = null;
-    public delegate void Callable();
-    public static Callable OnPause;
-    public static Callable OnUnpause;
-    public static Callable PausableUpdate;
+    public static System.Action OnPause;
+    public static System.Action OnUnpause;
+    public static System.Action PausableUpdate;
 
     static bool paused_internal = false;
     public static bool paused

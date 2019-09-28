@@ -4,5 +4,5 @@ using UnityEngine;
 public interface CursorUser
 {
     float GetMillisecondDelay();
-    FlowManager.AcceptNote GetCursor();
+    System.Action<Note> GetCursor();
 }
