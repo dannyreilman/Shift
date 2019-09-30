@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class LoadOnSpace : MonoBehaviour
 {
-    public string toLoad;
+    public int toLoad;
+    public int difficultyToLoad;
+
+    void Start()
+    {
+        MapLoader.instance.LoadMap(toLoad, difficultyToLoad);
+    }
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            MapLoader.instance.LoadMap(toLoad);
+            MapLoader.instance.LoadGameplayScene();
             Destroy(gameObject);
         }
     }

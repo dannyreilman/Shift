@@ -1,0 +1,13 @@
+{
+"name":"BARA LOVE BLAST DOGGIES",
+"songfile":"Renard - ROBOT BRAINSTRONAUT BLASTOFF!!! - 13 BARA LOVE BLAST DOGGES.mp3",
+"bpm":128,
+"offset":0,
+"beatsPerMeasure":4,
+"difficulties":[
+{
+	"name": "Easy",
+	"stars":2,
+	"displayedName": "Frogfish's Easy Test"
+}]
+}

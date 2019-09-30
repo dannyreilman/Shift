@@ -1,7 +1,9 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.SceneManagement;
 
 
 //Handles all control flow and song cursors
@@ -14,13 +16,14 @@ public class FlowManager : MonoBehaviour {
 			return instance.time;
 		}
 	}
+    public string abortScene;
 
 	private SongPlayer player;
 	private NoteLoader loader;
 	private TimingManager timing;
 	private TimeKeeper timekeeper;
 
-	private LoadedSong song;
+	public LoadedSong song;
 	private int songNoteIndex = 0;
 	
 	public Timestamp time = new Timestamp();
@@ -47,28 +50,37 @@ public class FlowManager : MonoBehaviour {
 		}
 	}
 
+	void Abort()
+	{
+		Debug.Log("Song didn't load properly, aborting");
+		MapLoader.instance.ClearLoaded();
+		SceneManager.LoadScene(abortScene, LoadSceneMode.Single);
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
-		LoadedSong initSong = null;
-		if(MapLoader.instance.loaded != null)
+		try
 		{
-			initSong = MapLoader.instance.loaded;
-		}
-		else
-		{
-			LoadSongFromFile songLoader = GetComponent<LoadSongFromFile>();
-			if(songLoader != null && (song == null || song.Equals(null)))
+			if(MapLoader.instance.loaded == null)
 			{
-				initSong = LoadSongFromFile.LoadSong(songLoader.file);
-			}		
+				MapLoader.instance.LoadMap(0, 0);
+			}
+			LoadedSong initSong = MapLoader.instance.loaded;
+
+			if(initSong != null)
+			{
+				timekeeper.SetBPM(initSong.bpm);
+				StartCoroutine(PlaySong(initSong));
+			}
+
+			PauseManager.PausableUpdate += PausableUpdate;
 		}
-		if(initSong != null)
+		catch(ArgumentException e)
 		{
-			timekeeper.SetBPM(initSong.bpm);
-			PlaySong(initSong);
+			Abort();
+			Debug.Log(e);
 		}
-		PauseManager.PausableUpdate += PausableUpdate;
 	}
 
 	void OnDestroy()
@@ -92,9 +104,16 @@ public class FlowManager : MonoBehaviour {
 		waiting = false;
 	}
 
-	void PlaySong(LoadedSong song)
+	IEnumerator PlaySong(LoadedSong song)
 	{
-		song.PrepForPlaying();
+		//This will wait for songfile to load, if possible
+		yield return song.PrepForPlaying();
+		if(song.song == null)
+		{
+			Abort();
+			yield break;
+		}
+
 		this.song = song;
 		AddCursor(loader);
 		AddCursor(timing);

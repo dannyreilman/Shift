@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -123,13 +123,12 @@ public class KeybindManager : MonoBehaviour {
 		public InputAction action;
 	}
 
-	public TextAsset bindingsFile;
 	List<Binding> bindings;
 
 
-	void LoadBindingsFromFile(TextAsset file)
+	void LoadBindingsFromFile(string path)
 	{
-		StringReader reader = new StringReader(file.text);
+		StreamReader reader = new StreamReader(path);
 		bindings = new List<Binding>();
         while(reader.Peek() > -1)
         {
@@ -173,7 +172,7 @@ public class KeybindManager : MonoBehaviour {
 				acceptUnpaused.Add(action, null);
 				acceptAlways.Add(action, null);
 			}
-			LoadBindingsFromFile(bindingsFile);
+			LoadBindingsFromFile("Keybindings.txt");
 		}
 		else
 		{

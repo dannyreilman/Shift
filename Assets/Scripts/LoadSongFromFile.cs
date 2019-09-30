@@ -22,7 +22,10 @@ public class LoadSongFromFile : MonoBehaviour
         //-0,1,0,0
 
         string[] parts = line.Substring(1).Split(NOTE_DELIM);
-        Assert.IsTrue(parts.Length >= 4);
+        if(parts.Length < 4)
+        {
+            throw new System.Exception("Invalid songfile:" + line);
+        }
         Note toAdd = new Note();
         toAdd.timing = new Timestamp(int.Parse(parts[0]), int.Parse(parts[1]), float.Parse(parts[2]));
         toAdd.lane = int.Parse(parts[3]);
@@ -80,11 +83,10 @@ public class LoadSongFromFile : MonoBehaviour
         return toAdd;
     }
 
-    public static LoadedSong LoadSong(TextAsset file)
+    public static LoadedSong LoadSong(string toLoad, LoadedSong toPopulate)
     {
-        LoadedSong song = (LoadedSong)ScriptableObject.CreateInstance("LoadedSong");
-        song.notes = new List<Note>();
-        StringReader reader = new StringReader(file.text);
+        toPopulate.notes = new List<Note>();
+        StringReader reader = new StringReader(toLoad);
         Timestamp lastTime = new Timestamp(0,0,0);
         while(reader.Peek() > -1)
         {
@@ -98,42 +100,22 @@ public class LoadSongFromFile : MonoBehaviour
             if(line[0] == NOTE)
             {
                 Note toAdd = ParseNote(line);
-                song.notes.Add(toAdd);
+                toPopulate.notes.Add(toAdd);
                 lastTime = toAdd.timing;
             }
             else if(line[0] == NOTE_RELATIVE)
             {
                 Note toAdd = ParseNote(line);
-                toAdd.timing.addTicks(song.beatsPerMeasure, lastTime.getTicks(song.beatsPerMeasure));
-                song.notes.Add(toAdd);
+                toAdd.timing.addTicks(toPopulate.beatsPerMeasure, lastTime.getTicks(toPopulate.beatsPerMeasure));
+                toPopulate.notes.Add(toAdd);
                 lastTime = toAdd.timing;
             }
             else if(line.Contains(VALUE_DELIM.ToString()))
             {
-                string[] parts = line.Split(VALUE_DELIM);
-                if(parts[0].ToLower().Trim().Equals("bpm"))
-                {
-                    Assert.IsTrue(float.TryParse(parts[1], out song.bpm));
-                }
-                else if(parts[0].ToLower().Trim().Equals("offset"))
-                {
-                    Assert.IsTrue(float.TryParse(parts[1], out song.offset));
-                }
-                else if(parts[0].ToLower().Trim().Equals("beatspermeasure"))
-                {
-                    Assert.IsTrue(int.TryParse(parts[1], out song.beatsPerMeasure));
-                }
-                else if(parts[0].ToLower().Trim().Equals("name"))
-                {
-                    song.name = parts[1];
-                }
-                else if(parts[0].ToLower().Trim().Equals("songfile"))
-                {
-                    song.song = Resources.Load<AudioClip>("SongFiles/"+parts[1]);
-                }
+                // Currently no values are allowed in difficulty file
             }
         }
-        return song;
+        return toPopulate;
     }
 
     public TextAsset file;

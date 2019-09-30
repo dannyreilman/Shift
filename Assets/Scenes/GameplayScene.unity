@@ -1783,6 +1783,7 @@ GameObject:
   - component: {fileID: 1509859775}
   - component: {fileID: 1509859778}
   - component: {fileID: 1509859776}
+  - component: {fileID: 1509859777}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1863,6 +1864,25 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!95 &1509859777
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509859774}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!222 &1509859778
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2062,6 +2082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcfeba38de83d9419be8c770ce6ee38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abortScene: Splash
   time:
     bars: 0
     beats: 0
@@ -2108,7 +2129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0958615f1a731584ca78313b62a6cbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  file: {fileID: 4900000, guid: 36a2e99fc4d52b74e941c2625904d0a5, type: 3}
+  file: {fileID: 4900000, guid: a6b206dfbf1a1d4418d9bff82dd2b17f, type: 3}
 --- !u!1001 &1621769271
 PrefabInstance:
   m_ObjectHideFlags: 0
