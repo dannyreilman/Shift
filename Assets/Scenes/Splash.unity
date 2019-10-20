@@ -364,10 +364,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 582164602}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a6726170cef83e408d0c49bf2b168e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ae3cb5b88668cf46a11ef6cd331c04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toLoad: BaraLove
+  keypress: space
+  toLoad: SongSelect
 --- !u!1 &796091213
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,6 +688,11 @@ PrefabInstance:
     - target: {fileID: 8448335369467214675, guid: cf6202091e1a1a0438be1c97bd85f8e6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848513021747148826, guid: cf6202091e1a1a0438be1c97bd85f8e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4696491422937655495, guid: cf6202091e1a1a0438be1c97bd85f8e6,

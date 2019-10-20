@@ -26,6 +26,12 @@ public class KeybindManager : MonoBehaviour {
 		upHit3 = 30,
 		midHit3,
 		downHit3,
+		menuLeft,
+		menuRight,
+		menuUp,
+		menuDown,
+		menuEnter,
+		menuBack,
 		increaseSpeed,
 		decreaseSpeed,
 		pause	

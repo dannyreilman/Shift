@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Splash.unity
     guid: ca8bd4b0fc54b954aa11b58388ced9b6
+  - enabled: 1
+    path: Assets/Scenes/SongSelect.unity
+    guid: 30036653cbd84804da71ce2cf9b1f935
   m_configObjects: {}

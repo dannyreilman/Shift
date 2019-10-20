@@ -12,7 +12,7 @@ public class MapLoader : MonoBehaviour
     public LoadedSong loaded = null;
     
     [System.Serializable]
-    struct DifficultyIndex
+    public struct DifficultyIndex
     {
         public string name;
         public string displayedName;
@@ -37,6 +37,21 @@ public class MapLoader : MonoBehaviour
     }
 
     List<MapWrapper> availableMaps;
+
+    public int GetMapCount()
+    {
+        return availableMaps.Count;
+    }
+
+    public string GetSongName(int index)
+    {
+        return availableMaps[index].index.name;
+    }
+
+    public DifficultyIndex[] GetDifficulties(int index)
+    {
+        return availableMaps[index].index.difficulties;
+    }
 
     void Awake()
     {
