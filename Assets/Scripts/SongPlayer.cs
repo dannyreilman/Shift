@@ -18,6 +18,19 @@ public class SongPlayer : MonoBehaviour
 			StartCoroutine(PlayAfterDelay(delay));
 		}
 	}
+
+	public IEnumerator FadeOut(float duration)
+	{
+		float initVolume = source.volume;
+		float volume = initVolume;
+		while(volume > 0)
+		{
+			volume -= initVolume/duration * Time.deltaTime;
+			source.volume = volume;
+			yield return 0;
+		}
+	}
+
 	IEnumerator PlayAfterDelay(float delay)
 	{
 		yield return new WaitForSeconds(delay);

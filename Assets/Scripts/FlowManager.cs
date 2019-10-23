@@ -32,6 +32,9 @@ public class FlowManager : MonoBehaviour {
 	public float totalOffset = 0;
 	//The perceived offset in the music
 	public float actualOffset;
+
+	public float scoreDelay;
+	public string scoreScene;
 	private bool waiting = true;
 
 	void Awake()
@@ -81,6 +84,8 @@ public class FlowManager : MonoBehaviour {
 			Abort();
 			Debug.Log(e);
 		}
+
+		ScoreManager.instance.ResetScore();
 	}
 
 	void OnDestroy()
@@ -136,6 +141,16 @@ public class FlowManager : MonoBehaviour {
 		toTrigger(n);
 	}
 
+	IEnumerator LoadScoreScreenAfterDelay()
+	{
+		yield return new WaitForSeconds(totalOffset/1000.0f);
+
+		StartCoroutine(player.FadeOut(scoreDelay));
+		yield return new WaitForSeconds(scoreDelay);
+
+		SceneManager.LoadScene(scoreScene);
+	}
+
 	void PausableUpdate()
 	{
 		if(!waiting)
@@ -150,6 +165,13 @@ public class FlowManager : MonoBehaviour {
 													entry.Value, 
 													song.notes[songNoteIndex]));
 				}
+				++songNoteIndex;
+			}
+
+			if(songNoteIndex == song.notes.Count)
+			{
+				//Song ended, trigger exit fade
+				StartCoroutine(LoadScoreScreenAfterDelay());
 				++songNoteIndex;
 			}
 		}

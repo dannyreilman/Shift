@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Text))]
-[RequireComponent(typeof(Animator))]
 public class ComboDisplay : MonoBehaviour
 {
 	Text attachedText;
@@ -18,7 +17,18 @@ public class ComboDisplay : MonoBehaviour
 
 	void Start()
 	{
-		ScoreManager.instance.OnScoreChange += delegate(){attachedAnimator.SetTrigger("Pop");};
+		ScoreManager.instance.OnScoreChange += Pop;
+	}
+
+	void OnDestroy()
+	{
+		ScoreManager.instance.OnScoreChange -= Pop;
+	}
+
+	void Pop()
+	{
+		if(attachedAnimator != null)
+			attachedAnimator.SetTrigger("Pop");
 	}
 
 

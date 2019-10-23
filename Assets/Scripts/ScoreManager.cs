@@ -6,8 +6,6 @@ public class ScoreManager : MonoBehaviour
 {
 	public static ScoreManager instance = null;
 
-
-
 	public System.Action OnScoreChange;
 	private int score_internal = 0;
 	public int score
@@ -47,6 +45,14 @@ public class ScoreManager : MonoBehaviour
 
 	public float totalAccuracy = 0.0f;
 	public int notesHit = 0;
+
+	public void ResetScore()
+	{
+		totalAccuracy = 0.0f;
+		notesHit = 0;
+		combo = 0;
+		score = 0;
+	}
 
 	void Awake ()
 	{

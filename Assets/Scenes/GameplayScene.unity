@@ -497,7 +497,7 @@ Transform:
   m_Children:
   - {fileID: 670451818}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &522538094 stripped
 RectTransform:
@@ -1143,7 +1143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781623090
 GameObject:
@@ -2042,7 +2042,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1563219968}
   - component: {fileID: 1563219969}
-  - component: {fileID: 1563219970}
   - component: {fileID: 1563219971}
   - component: {fileID: 1563219972}
   m_Layer: 0
@@ -2068,7 +2067,7 @@ Transform:
   - {fileID: 1277582227}
   - {fileID: 1531242216}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1563219969
 MonoBehaviour:
@@ -2082,27 +2081,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfcfeba38de83d9419be8c770ce6ee38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abortScene: Splash
+  abortScene: SongSelect
+  song: {fileID: 0}
   time:
     bars: 0
     beats: 0
     subdivision: 0
   totalOffset: 0
   actualOffset: 0
---- !u!114 &1563219970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563219967}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b0811ff95d22a840ae88c1e50c85481, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalAccuracy: 0
-  notesHit: 0
+  scoreDelay: 1
+  scoreScene: ScoreScreen
 --- !u!114 &1563219971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2473,7 +2461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f003c2176276a84d88fd6856ad6e0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitScene: Splash
+  exitScene: SongSelect
 --- !u!222 &2092624753
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2636,7 +2624,7 @@ PrefabInstance:
     - target: {fileID: 8448335369467214675, guid: cf6202091e1a1a0438be1c97bd85f8e6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8448335369467214675, guid: cf6202091e1a1a0438be1c97bd85f8e6,
         type: 3}
@@ -2651,6 +2639,11 @@ PrefabInstance:
     - target: {fileID: 8448335369467214675, guid: cf6202091e1a1a0438be1c97bd85f8e6,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5848513021747148826, guid: cf6202091e1a1a0438be1c97bd85f8e6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

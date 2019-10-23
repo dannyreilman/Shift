@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SongSelect.unity
     guid: 30036653cbd84804da71ce2cf9b1f935
+  - enabled: 1
+    path: Assets/Scenes/ScoreScreen.unity
+    guid: fb85bcc10f1ae464ab931172facd3207
   m_configObjects: {}
