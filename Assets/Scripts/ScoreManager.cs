@@ -6,6 +6,18 @@ public class ScoreManager : MonoBehaviour
 {
 	public static ScoreManager instance = null;
 
+	public int[] comboStages;
+	public int comboBase;
+	public float stageScale = 2f;
+
+	public int stageIndex = 0;
+
+	public int GetComboScale()
+	{
+		return comboStages[stageIndex];
+	}
+	
+
 	public System.Action OnScoreChange;
 	private int score_internal = 0;
 	public int score
@@ -39,9 +51,24 @@ public class ScoreManager : MonoBehaviour
 				combo_internal = value;
 				if(OnComboChange != null)
 					OnComboChange();
+
+				if(stageIndex + 1 < comboStages.Length && combo_internal > GetRequiredCombo())
+				{
+					++stageIndex;
+				}
 			}
 		}
 	}
+
+	// Returns the required combo to advance to the next stage
+	// This is equal to comboBase * scale ^n summed with n from 0 to index
+	// This summation is also equal to B((S^(index + 1) - 1)/(S-1))
+	int GetRequiredCombo()
+	{
+		return Mathf.CeilToInt(comboBase * (Mathf.Pow(stageScale, stageIndex + 1) - 1) / (stageScale - 1));
+	}
+
+	public System.Action<string, Color> HitName;
 
 	public float totalAccuracy = 0.0f;
 	public int notesHit = 0;

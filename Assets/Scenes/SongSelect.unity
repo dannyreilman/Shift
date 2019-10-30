@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd9c0592ddee09c4db9215c085a8581a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolSize: 9
+  poolSize: 15
   rowHeight: 100
   prefab: {fileID: 5610408130080895330, guid: 7d5a07fa6168d5b4393e16bbbe2389f9, type: 3}
   correctDelay: 0.025

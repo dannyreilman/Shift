@@ -9,6 +9,8 @@ public class TimingManager : MonoBehaviour, CursorUser
 	[System.Serializable]
 	public class Window
 	{
+		public string name;
+		public Color color;
 		public float msDelay;
 		public int pointValue;
 		public bool breaksCombo;
@@ -107,7 +109,8 @@ public class TimingManager : MonoBehaviour, CursorUser
 	
 	private void TriggerWindow(Window w)
 	{
-		ScoreManager.instance.score += w.pointValue;
+		ScoreManager.instance.score += w.pointValue * ScoreManager.instance.GetComboScale();
+		ScoreManager.instance.HitName(w.name, w.color);
 		if(w.breaksCombo)
 		{
 			ScoreManager.instance.combo = 0;
@@ -116,7 +119,6 @@ public class TimingManager : MonoBehaviour, CursorUser
 		{
 			ScoreManager.instance.combo++;
 		}
-
 	}
 
 	void PausableUpdate()
@@ -129,6 +131,7 @@ public class TimingManager : MonoBehaviour, CursorUser
 				if(notesInWindow[i].note.rendered != null)
 					notesInWindow[i].note.rendered.CleanupNote();
 				ScoreManager.instance.combo = 0;
+				ScoreManager.instance.HitName("", Color.black);
 				notesInWindow.RemoveAt(i);
 				//Debug.Log("Removing...");
 			}
