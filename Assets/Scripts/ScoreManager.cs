@@ -10,7 +10,12 @@ public class ScoreManager : MonoBehaviour
 	public int comboBase;
 	public float stageScale = 2f;
 
-	public int stageIndex = 0;
+	public int GetComboStage()
+	{
+		return stageIndex;
+	}
+
+	int stageIndex = 0;
 
 	public int GetComboScale()
 	{
@@ -37,6 +42,7 @@ public class ScoreManager : MonoBehaviour
 		}
 	}
 	public System.Action OnComboChange;
+	public System.Action OnComboStageChange;
 	private int combo_internal = 0;
 	public int combo
 	{
@@ -52,9 +58,18 @@ public class ScoreManager : MonoBehaviour
 				if(OnComboChange != null)
 					OnComboChange();
 
-				if(stageIndex + 1 < comboStages.Length && combo_internal > GetRequiredCombo())
+				if(combo_internal == 0)
+				{
+					stageIndex = 0;
+					if(OnComboStageChange != null)
+						OnComboStageChange();
+				}
+				else if(stageIndex + 1 < comboStages.Length && combo_internal > GetRequiredCombo())
 				{
 					++stageIndex;
+					Debug.Log(stageIndex);
+					if(OnComboStageChange != null)
+						OnComboStageChange();
 				}
 			}
 		}
