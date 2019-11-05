@@ -41,4 +41,9 @@ public class SongPlayer : MonoBehaviour
 		source = GetComponent<AudioSource>();
 	}
 
+	void Update()
+	{
+		source.pitch = Time.timeScale;
+	}
+
 }

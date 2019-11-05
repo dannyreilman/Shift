@@ -62,7 +62,7 @@ public class TimingManager : MonoBehaviour, CursorUser
 
 	public void AcceptInput(KeybindManager.InputAction action)
 	{
-		if(!KeybindManager.IsRowHit(action) || PauseManager.paused)
+		if(!KeybindManager.IsRowHit(action) || PauseManager.currentState != PauseManager.State.Gameplay)
 			return;
 
 		int row = KeybindManager.GetRow(action);
@@ -89,36 +89,36 @@ public class TimingManager : MonoBehaviour, CursorUser
 		{
 			if(Mathf.Abs(closestNote.timing) > Mathf.Abs(timingWindows[i].msDelay))
 			{
-				TriggerWindow(last);
-				if(closestNote.note.rendered != null)
-					closestNote.note.rendered.HitNote();
-				HitsoundManager.instance.PlaySound(closestNote.note.soundType);
-				notesInWindow.Remove(closestNote);
+				TriggerWindow(last, closestNote);
 				return;
 
 			}
 			last = timingWindows[i];
 		}
-		TriggerWindow(last);
-		if(closestNote.note.rendered != null)
-			closestNote.note.rendered.HitNote();
-		HitsoundManager.instance.PlaySound(closestNote.note.soundType);
-		notesInWindow.Remove(closestNote);
+		TriggerWindow(last, closestNote);
 		return;
 	}
 	
-	private void TriggerWindow(Window w)
+	private void TriggerWindow(Window w, ClosebyNote note)
 	{
 		ScoreManager.instance.score += w.pointValue * ScoreManager.instance.GetComboScale();
 		ScoreManager.instance.HitName(w.name, w.color);
 		if(w.breaksCombo)
 		{
 			ScoreManager.instance.combo = 0;
+			if(DeathHandler.instance != null)
+			{
+				DeathHandler.instance.OnMiss();
+			}
 		}
 		else
 		{
 			ScoreManager.instance.combo++;
 		}
+		HitsoundManager.instance.PlaySound(note.note.soundType);
+		if(note.note.rendered != null)
+			note.note.rendered.HitNote();
+		notesInWindow.Remove(note);
 	}
 
 	void PausableUpdate()
@@ -131,6 +131,10 @@ public class TimingManager : MonoBehaviour, CursorUser
 				if(notesInWindow[i].note.rendered != null)
 					notesInWindow[i].note.rendered.CleanupNote();
 				ScoreManager.instance.combo = 0;
+				if(DeathHandler.instance != null)
+				{
+					DeathHandler.instance.OnMiss();
+				}
 				ScoreManager.instance.HitName("", Color.black);
 				notesInWindow.RemoveAt(i);
 				//Debug.Log("Removing...");

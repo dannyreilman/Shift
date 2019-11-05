@@ -5,37 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class PauseManager : MonoBehaviour
 {
+    public enum State
+    {
+        Gameplay,
+        Paused,
+        Dead
+    }
+
+    static State currentState_internal = State.Gameplay;
+
+    public static State currentState
+    {
+        get
+        {
+            return currentState_internal;
+        }
+        set
+        {
+            if(currentState_internal != value)
+            {
+                if(OnExit[currentState_internal] != null)
+                    OnExit[currentState_internal]();
+
+                currentState_internal = value;
+
+                if(OnEnter[currentState_internal] != null)
+                    OnEnter[currentState_internal]();
+            }
+        }
+    }
     public static PauseManager instance = null;
-    public static System.Action OnPause;
-    public static System.Action OnUnpause;
+    public static Dictionary<State, System.Action> OnEnter = null;
+    public static Dictionary<State, System.Action> OnExit = null;
     public static System.Action PausableUpdate;
 
-    static bool paused_internal = false;
     public static bool paused
     {
         get
         {
-            return paused_internal;
-        }
-        set
-        {
-            if(paused_internal != value)
-            {
-                if(value)
-                {
-                    if(OnPause != null)
-                        OnPause();
-                    Debug.Log("Pause"); 
-                }
-                else
-                {
-                    if(OnUnpause != null)
-                        OnUnpause();
-                    Debug.Log("Unpause");
-                }
-                paused_internal = value;
-                AudioListener.pause = paused_internal;
-            }
+            return currentState == State.Paused;
         }
     }
 
@@ -44,6 +52,22 @@ public class PauseManager : MonoBehaviour
         if(instance == null || instance.Equals(null))
         {
             instance = this;
+            if(OnEnter == null || OnEnter.Equals(null))
+            {
+                OnEnter = new Dictionary<State, System.Action>();
+                foreach(State action in System.Enum.GetValues(typeof(State)))
+                {
+                    OnEnter[action] = null;
+                }
+            }
+            if(OnExit == null|| OnExit.Equals(null))
+            {
+                OnExit = new Dictionary<State, System.Action>();
+                foreach(State action in System.Enum.GetValues(typeof(State)))
+                {
+                    OnExit[action] = null;
+                }
+            }
         }
         else
         {
@@ -53,33 +77,38 @@ public class PauseManager : MonoBehaviour
 
     void Start()
     {
-        OnPause += StopTime;
-        OnUnpause += StartTime;
+        OnEnter[State.Paused] += StopTime;
+        OnEnter[State.Gameplay] += StartTime;
         KeybindManager.acceptAlways[KeybindManager.InputAction.pause] += Pause;
     }
 
     void OnDestroy()
     {
         //Auto unpause when leaving scene with a pause screen
-        paused = false;
-        OnPause -= StopTime;
-        OnUnpause -= StartTime;
+        currentState = State.Gameplay;
+        OnEnter[State.Paused] -= StopTime;
+        OnEnter[State.Gameplay] -= StartTime;
         KeybindManager.acceptAlways[KeybindManager.InputAction.pause] -= Pause;
     }
 
     public void Pause()
     {
-        paused = !paused;
+        if(paused)
+            currentState = State.Gameplay;
+        else if(currentState == State.Gameplay)
+            currentState = State.Paused;
     }
 
     void StopTime()
     {
         Time.timeScale = 0.0f;
+        AudioListener.pause = true;
     }
 
     void StartTime()
     {
         Time.timeScale = 1.0f;
+        AudioListener.pause = false;
     }
 
     void Update()
