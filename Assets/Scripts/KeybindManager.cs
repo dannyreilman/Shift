@@ -4,9 +4,9 @@ using System.IO;
 using UnityEngine;
 
 public class KeybindManager : MonoBehaviour {
-	//Only accepts when unpaused
-	public static Dictionary<InputAction, System.Action> acceptUnpaused;
-	//Stronger than acceptUnpaused, also accepts during a pause (also accepts when unpaused)
+	//Only accepts during a given state
+	public static Dictionary<PauseManager.State, Dictionary<InputAction, System.Action> > acceptDuringState;
+	//Stronger than acceptDuringState, also accepts during a pause (also accepts when unpaused)
 	public static Dictionary<InputAction, System.Action> acceptAlways;
 	public static System.Action<InputAction> acceptAnything;
 
@@ -171,11 +171,19 @@ public class KeybindManager : MonoBehaviour {
 		if(instance == null || instance.Equals(null))
 		{
 			instance = this;
-			acceptUnpaused = new Dictionary<InputAction, System.Action>();
+			acceptDuringState = new Dictionary<PauseManager.State, Dictionary<InputAction, System.Action> >();
+			foreach(PauseManager.State state in System.Enum.GetValues(typeof(PauseManager.State)))
+			{
+				acceptDuringState[state] = new Dictionary<InputAction, System.Action>();
+				foreach(InputAction action in System.Enum.GetValues(typeof(InputAction)))
+				{
+					acceptDuringState[state].Add(action, null);
+				}
+			}
+
 			acceptAlways = new Dictionary<InputAction, System.Action>();
 			foreach(InputAction action in System.Enum.GetValues(typeof(InputAction)))
 			{
-				acceptUnpaused.Add(action, null);
 				acceptAlways.Add(action, null);
 			}
 			LoadBindingsFromFile("Keybindings.txt");
@@ -193,10 +201,9 @@ public class KeybindManager : MonoBehaviour {
 		{
 			if(Input.GetKeyDown(bindings[i].key))
 			{
-				if(!PauseManager.paused)
+				if(acceptDuringState[PauseManager.currentState][bindings[i].action] != null)
 				{
-					if(acceptUnpaused[bindings[i].action] != null)
-						acceptUnpaused[bindings[i].action]();
+					acceptDuringState[PauseManager.currentState][bindings[i].action]();
 				}
 					
 				if(acceptAlways[bindings[i].action] != null)

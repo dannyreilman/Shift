@@ -19,14 +19,14 @@ public class RenderedNote : MonoBehaviour
 
 	void Start()
 	{
-		PauseManager.OnPause += HideNote;
-		PauseManager.OnUnpause += ShowNote;
+		PauseManager.OnExit[PauseManager.State.Gameplay] += HideNote;
+		PauseManager.OnEnter[PauseManager.State.Gameplay] += ShowNote;
 	}
 
 	void OnDestroy()
 	{
-		PauseManager.OnPause -= HideNote;
-		PauseManager.OnUnpause -= ShowNote;
+		PauseManager.OnExit[PauseManager.State.Gameplay] -= HideNote;
+		PauseManager.OnEnter[PauseManager.State.Gameplay] -= ShowNote;
 	}
 
 	public void HideNote()

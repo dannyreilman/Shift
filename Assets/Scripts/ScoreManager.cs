@@ -67,12 +67,17 @@ public class ScoreManager : MonoBehaviour
 				else if(stageIndex + 1 < comboStages.Length && combo_internal > GetRequiredCombo())
 				{
 					++stageIndex;
-					Debug.Log(stageIndex);
 					if(OnComboStageChange != null)
 						OnComboStageChange();
 				}
 			}
 		}
+	}
+
+	//Sets the combo without triggering OnComboChange
+	public void SetComboQuietly(int combo)
+	{
+		combo_internal = combo;
 	}
 
 	// Returns the required combo to advance to the next stage
@@ -92,7 +97,7 @@ public class ScoreManager : MonoBehaviour
 	{
 		totalAccuracy = 0.0f;
 		notesHit = 0;
-		combo = 0;
+		SetComboQuietly(0);
 		score = 0;
 	}
 
